@@ -21,8 +21,8 @@ export default function Header() {
         </NavLink>
       </li>
       <li>
-        <NavLink className="mx-2" to="/">
-          Blog
+        <NavLink className="mx-2" to="/login">
+          about
         </NavLink>
       </li>
     </>
