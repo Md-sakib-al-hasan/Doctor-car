@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import logo from "../../../assets/logo.svg";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { Authcontext } from "../../../Provider/AuthProviders";
 
 export default function Header() {
+  const { user, logout } = useContext(Authcontext);
+  const handleLogout = () => {
+    logout()
+      .then(() => {})
+      .catch((error) => console.log(error.message));
+  };
   const navitems = (
     <>
       <li>
@@ -22,8 +29,18 @@ export default function Header() {
       </li>
       <li>
         <NavLink className="mx-2" to="/login">
-          about
+          login
         </NavLink>
+      </li>
+      <li>
+        {user?.email ? (
+          <li>
+            <button onClick={handleLogout}>logout</button>
+            <Link to="/bookings">Bookings</Link>
+          </li>
+        ) : (
+          <li></li>
+        )}
       </li>
     </>
   );
@@ -63,6 +80,7 @@ export default function Header() {
       </div>
       <div className="navbar-end">
         <a className="btn btn-outline btn-warning">Appointment</a>
+        <a className="btn btn-outline btn-warning">{user?.email}</a>
       </div>
     </div>
   );

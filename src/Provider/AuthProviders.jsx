@@ -1,6 +1,7 @@
 import {
   sendSignInLinkToEmail,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import auth from "../assets/firebase.config";
@@ -21,10 +22,14 @@ export default function AuthProviders({ children }) {
     setLoding(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
+  const logout = () => {
+    return signOut(auth);
+  };
 
   useEffect(() => {
     const unsubcribe = onAuthStateChanged(auth, (currentuser) => {
       setUser(currentuser);
+      console.log(currentuser);
       setLoding(false);
     });
     return;
@@ -36,6 +41,7 @@ export default function AuthProviders({ children }) {
     loding,
     createuser,
     signIn,
+    logout,
   };
 
   return (
